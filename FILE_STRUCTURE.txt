@@ -1,0 +1,22 @@
+# LaundryLink PWA - File Structure
+
+laundry-pwa/
+├── index.html              # Main application file
+├── manifest.json           # PWA manifest
+├── sw.js                   # Service worker for offline support
+├── setup.html              # Interactive setup guide
+├── README.md               # Documentation
+├── supabase-schema.sql     # Database schema
+├── css/
+│   └── styles.css          # All styles
+├── js/
+│   ├── config.js           # API keys configuration
+│   └── app.js              # Main application logic
+└── img/
+    ├── icon-192.svg        # App icon 192x192
+    └── icon-512.svg        # App icon 512x512
+
+# Notes:
+# - Convert SVG icons to PNG for better compatibility (192x192 and 512x512)
+# - All configuration happens in js/config.js
+# - Database setup via supabase-schema.sql

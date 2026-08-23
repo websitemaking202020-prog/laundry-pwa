@@ -1,0 +1,36 @@
+# .gitignore for LaundryLink PWA
+
+# Keep config template but ignore actual keys (optional security)
+# js/config.js
+
+# Node modules (if using npm for any tooling)
+node_modules/
+package-lock.json
+
+# Environment files
+.env
+.env.local
+
+# Editor directories
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+npm-debug.log*
+
+# Build outputs (if added later)
+dist/
+build/
+
+# Temporary files
+*.tmp
+.cache/

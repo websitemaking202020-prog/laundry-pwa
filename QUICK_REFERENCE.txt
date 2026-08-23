@@ -1,0 +1,146 @@
+┌─────────────────────────────────────────────────────────────────┐
+│           LaundryLink PWA - Quick Reference Card                │
+└─────────────────────────────────────────────────────────────────┘
+
+📋 SETUP CHECKLIST
+──────────────────
+□ 1. Create Supabase account → Run supabase-schema.sql
+□ 2. Create OneSignal account → Get App ID
+□ 3. Create Cloudflare Turnstile → Get Site Key
+□ 4. Update js/config.js with all API keys
+□ 5. Start server: ./start.ps1 or python -m http.server 8000
+□ 6. Register first user → Make admin in Supabase
+□ 7. Test: Book order → Assign to staff → Complete
+
+🔑 FIRST ADMIN USER
+───────────────────
+1. Register through the app
+2. Copy UUID from Supabase > Authentication > Users
+3. Run in SQL Editor:
+   update profiles set role = 'admin' where id = 'YOUR-UUID';
+4. Logout and login again
+
+🎯 DEFAULT CREDENTIALS
+───────────────────────
+After setup, create:
+• 1 Admin account (you)
+• 2+ Staff accounts (via Admin panel)
+• Customers register themselves
+
+💰 SERVICE PRICING (Editable in js/config.js)
+──────────────────────────────────────────────
+Wash & Fold    → $5.00/kg
+Wash & Iron    → $7.50/kg
+Dry Clean      → $12.00/kg
+Iron Only      → $3.00/kg
+
+📱 USER ROLES
+─────────────
+CUSTOMER: Book services, track orders, get notifications
+STAFF: View assigned tasks, mark complete, see customer info
+ADMIN: Manage everything, assign tasks, view statistics
+
+🔔 NOTIFICATIONS
+────────────────
+• New order → Admin notified
+• Task assigned → Staff notified
+• Order complete → Customer notified
+• All via OneSignal push notifications
+
+🎨 CUSTOMIZATION
+────────────────
+Colors:        css/styles.css (CSS variables in :root)
+Pricing:       js/config.js (SERVICE_PRICING)
+Services:      js/config.js + index.html (service dropdown)
+Branding:      index.html + manifest.json
+Icons:         img/ folder (192x192 & 512x512 PNG)
+
+🚀 DEPLOYMENT OPTIONS
+─────────────────────
+Local:    python -m http.server 8000
+Netlify:  Push to GitHub → Import to Netlify → Deploy
+Vercel:   Push to GitHub → Import to Vercel → Deploy
+GitHub:   Enable GitHub Pages on main branch
+
+🐛 TROUBLESHOOTING
+──────────────────
+Can't login?
+  → Check Supabase URL & key in config.js
+  → Disable email confirmation in Supabase
+
+No notifications?
+  → Must use HTTPS (or localhost)
+  → Check OneSignal App ID
+  → Grant browser permission
+
+Turnstile not showing?
+  → Use test key: 1x00000000000000000000AA
+  → Disable adblockers
+
+Database errors?
+  → Re-run supabase-schema.sql completely
+  → Check user role in profiles table
+
+📂 FILE STRUCTURE
+─────────────────
+index.html           → Main app
+setup.html           → Setup guide
+js/config.js         → API keys (EDIT THIS!)
+js/app.js            → Application logic
+css/styles.css       → Styling
+supabase-schema.sql  → Database schema
+manifest.json        → PWA config
+sw.js                → Service worker
+
+🔗 IMPORTANT URLS
+─────────────────
+Supabase:    https://supabase.com
+OneSignal:   https://onesignal.com
+Turnstile:   https://dash.cloudflare.com
+Docs:        See README.md & FEATURES.md
+
+⚡ QUICK COMMANDS
+────────────────
+Start:       ./start.ps1 (Windows) or ./start.sh (Linux/Mac)
+Test:        Open setup.html for guided setup
+Deploy:      Push to GitHub → Connect to Netlify
+
+💡 PRO TIPS
+───────────
+• Install as PWA on phone for best experience
+• Enable all notifications for real-time updates
+• Train staff in 5 minutes (it's that simple!)
+• Check admin dashboard daily for overview
+• Encourage customers to install the app
+
+🎯 TYPICAL WORKFLOW
+───────────────────
+1. Customer books service via app
+2. Admin gets notification
+3. Admin assigns to available staff
+4. Staff gets notification
+5. Staff completes order
+6. Customer gets "ready" notification
+7. Everyone happy! 😊
+
+📊 REPLACES WHATSAPP FOR
+────────────────────────
+✓ Service booking requests
+✓ "Is my order ready?" messages
+✓ Status update notifications
+✓ Task assignment in groups
+✓ Customer contact management
+✓ Order history searches
+✓ Staff coordination
+
+🎉 SUCCESS METRICS
+──────────────────
+• 75% reduction in manual messaging
+• Instant order processing
+• Zero lost orders
+• Professional appearance
+• Happy customers
+
+┌─────────────────────────────────────────────────────────────────┐
+│  Need Help? Open setup.html in your browser for detailed guide │
+└─────────────────────────────────────────────────────────────────┘

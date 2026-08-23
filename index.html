@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4F46E5">
+    <title>LaundryLink - Smart Laundry Management</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="img/icon-192.png">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Login Screen -->
+        <div id="loginScreen" class="screen active">
+            <div class="login-container">
+                <div class="logo">
+                    <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+                        <rect width="60" height="60" rx="12" fill="#4F46E5"/>
+                        <path d="M30 15C21.716 15 15 21.716 15 30s6.716 15 15 15 15-6.716 15-15-6.716-15-15-15zm0 2c7.18 0 13 5.82 13 13s-5.82 13-13 13-13-5.82-13-13 5.82-13 13-13z" fill="white"/>
+                        <path d="M30 20a2 2 0 0 1 2 2v8a2 2 0 1 1-4 0v-8a2 2 0 0 1 2-2zm0 14a2 2 0 1 1 0 4 2 2 0 0 1 0-4z" fill="white"/>
+                    </svg>
+                </div>
+                <h1>LaundryLink</h1>
+                <p class="subtitle">Efficient laundry management</p>
+
+                <div class="turnstile-container">
+                    <div id="turnstile-widget"></div>
+                </div>
+
+                <form id="loginForm" class="login-form">
+                    <div class="form-group">
+                        <input type="email" id="email" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="password" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="loginBtn">Sign In</button>
+                </form>
+
+                <div class="divider">
+                    <span>or</span>
+                </div>
+
+                <button class="btn btn-secondary" id="showRegisterBtn">Create Account</button>
+            </div>
+        </div>
+
+        <!-- Register Screen -->
+        <div id="registerScreen" class="screen">
+            <div class="login-container">
+                <button class="back-btn" id="backToLoginBtn">← Back</button>
+                <h2>Create Account</h2>
+
+                <form id="registerForm" class="login-form">
+                    <div class="form-group">
+                        <input type="text" id="regName" placeholder="Full Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="regEmail" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="regPhone" placeholder="Phone Number" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="regPassword" placeholder="Password" required minlength="6">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Register as Customer</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Admin Dashboard -->
+        <div id="adminDashboard" class="screen dashboard">
+            <nav class="navbar">
+                <h2>Admin Panel</h2>
+                <button class="btn-icon" id="adminLogout">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>
+                    </svg>
+                </button>
+            </nav>
+
+            <div class="tabs">
+                <button class="tab active" data-tab="overview">Overview</button>
+                <button class="tab" data-tab="orders">Orders</button>
+                <button class="tab" data-tab="staff">Staff</button>
+                <button class="tab" data-tab="customers">Customers</button>
+            </div>
+
+            <div class="dashboard-content">
+                <div id="overviewTab" class="tab-content active">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon blue">📊</div>
+                            <div class="stat-info">
+                                <h3 id="totalOrders">0</h3>
+                                <p>Total Orders</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon orange">⏳</div>
+                            <div class="stat-info">
+                                <h3 id="pendingOrders">0</h3>
+                                <p>Pending</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon green">✓</div>
+                            <div class="stat-info">
+                                <h3 id="completedOrders">0</h3>
+                                <p>Completed</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon purple">👥</div>
+                            <div class="stat-info">
+                                <h3 id="totalStaff">0</h3>
+                                <p>Staff Members</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h3>Recent Activity</h3>
+                        <div id="recentActivity" class="activity-list"></div>
+                    </div>
+                </div>
+
+                <div id="ordersTab" class="tab-content">
+                    <div class="section-header">
+                        <h3>All Orders</h3>
+                    </div>
+                    <div id="adminOrdersList" class="orders-list"></div>
+                </div>
+
+                <div id="staffTab" class="tab-content">
+                    <div class="section-header">
+                        <h3>Staff Management</h3>
+                        <button class="btn btn-primary" id="addStaffBtn">+ Add Staff</button>
+                    </div>
+                    <div id="staffList" class="staff-list"></div>
+                </div>
+
+                <div id="customersTab" class="tab-content">
+                    <div class="section-header">
+                        <h3>Customers</h3>
+                    </div>
+                    <div id="customersList" class="customers-list"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Staff Dashboard -->
+        <div id="staffDashboard" class="screen dashboard">
+            <nav class="navbar">
+                <h2>Staff Panel</h2>
+                <button class="btn-icon" id="staffLogout">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>
+                    </svg>
+                </button>
+            </nav>
+
+            <div class="tabs">
+                <button class="tab active" data-tab="myTasks">My Tasks</button>
+                <button class="tab" data-tab="completed">Completed</button>
+            </div>
+
+            <div class="dashboard-content">
+                <div id="myTasksTab" class="tab-content active">
+                    <div id="staffTasksList" class="tasks-list"></div>
+                </div>
+
+                <div id="completedTab" class="tab-content">
+                    <div id="staffCompletedList" class="tasks-list"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customer Dashboard -->
+        <div id="customerDashboard" class="screen dashboard">
+            <nav class="navbar">
+                <h2>My Laundry</h2>
+                <button class="btn-icon" id="customerLogout">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>
+                    </svg>
+                </button>
+            </nav>
+
+            <div class="tabs">
+                <button class="tab active" data-tab="newOrder">New Order</button>
+                <button class="tab" data-tab="myOrders">My Orders</button>
+            </div>
+
+            <div class="dashboard-content">
+                <div id="newOrderTab" class="tab-content active">
+                    <div class="section">
+                        <h3>Book Laundry Service</h3>
+                        <form id="newOrderForm" class="order-form">
+                            <div class="form-group">
+                                <label>Service Type</label>
+                                <select id="serviceType" required>
+                                    <option value="">Select service...</option>
+                                    <option value="wash_fold">Wash & Fold</option>
+                                    <option value="wash_iron">Wash & Iron</option>
+                                    <option value="dry_clean">Dry Clean</option>
+                                    <option value="iron_only">Iron Only</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Weight (kg)</label>
+                                <input type="number" id="weight" min="1" step="0.5" placeholder="Approximate weight" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Pickup Date & Time</label>
+                                <input type="datetime-local" id="pickupTime" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Special Instructions</label>
+                                <textarea id="instructions" rows="3" placeholder="Any special requests..."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Place Order</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="myOrdersTab" class="tab-content">
+                    <div id="customerOrdersList" class="orders-list"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modals -->
+        <div id="addStaffModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Add Staff Member</h3>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <form id="addStaffForm">
+                    <div class="form-group">
+                        <input type="text" id="staffName" placeholder="Full Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="staffEmail" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="staffPhone" placeholder="Phone Number" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="staffPassword" placeholder="Temporary Password" required minlength="6">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Staff</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="assignTaskModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Assign Task to Staff</h3>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <form id="assignTaskForm">
+                    <input type="hidden" id="assignOrderId">
+                    <div class="form-group">
+                        <label>Select Staff Member</label>
+                        <select id="assignStaffId" required>
+                            <option value="">Choose staff...</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Assign Task</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <script src="js/config.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(reg => console.log('Service Worker registered', reg))
+                .catch(err => console.error('Service Worker registration failed', err));
+        }
+    </script>
+</body>
+</html>

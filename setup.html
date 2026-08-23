@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setup Guide - LaundryLink</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            opacity: 0.9;
+            font-size: 18px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #4F46E5;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        h3 {
+            color: #333;
+            margin: 20px 0 10px;
+            font-size: 18px;
+        }
+
+        ol, ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+
+        pre {
+            background: #1a1a1a;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: #f8f8f2;
+        }
+
+        .warning {
+            background: #FFF3CD;
+            border-left: 4px solid #F59E0B;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .info {
+            background: #D1E7FF;
+            border-left: 4px solid #4F46E5;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .step {
+            background: #f9f9f9;
+            border-left: 4px solid #10B981;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .step-number {
+            display: inline-block;
+            background: #10B981;
+            color: white;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            border-radius: 50%;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        a {
+            color: #4F46E5;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #4F46E5;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            margin: 10px 10px 10px 0;
+            font-weight: 600;
+        }
+
+        .btn:hover {
+            background: #4338CA;
+            text-decoration: none;
+        }
+
+        .checklist {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .checklist li:before {
+            content: "☐ ";
+            margin-right: 8px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧺 LaundryLink Setup Guide</h1>
+            <p class="subtitle">Get your laundry management system up and running in minutes</p>
+        </header>
+
+        <div class="card">
+            <h2>📋 Quick Setup Checklist</h2>
+            <ul class="checklist">
+                <li>Create Supabase account and project</li>
+                <li>Set up database schema</li>
+                <li>Create OneSignal account for notifications</li>
+                <li>Set up Cloudflare Turnstile</li>
+                <li>Configure API keys</li>
+                <li>Create admin user</li>
+                <li>Deploy or test locally</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>1️⃣ Supabase Setup</h2>
+
+            <div class="step">
+                <h3><span class="step-number">1</span>Create Account</h3>
+                <p>Go to <a href="https://supabase.com" target="_blank">supabase.com</a> and create a free account.</p>
+            </div>
+
+            <div class="step">
+                <h3><span class="step-number">2</span>Create New Project</h3>
+                <ul>
+                    <li>Click "New Project"</li>
+                    <li>Choose a name (e.g., "laundrylink")</li>
+                    <li>Set a strong database password (save it!)</li>
+                    <li>Select a region closest to you</li>
+                    <li>Wait for project to finish setting up (~2 minutes)</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h3><span class="step-number">3</span>Run Database Schema</h3>
+                <ul>
+                    <li>Go to <strong>SQL Editor</strong> in the left sidebar</li>
+                    <li>Click "New Query"</li>
+                    <li>Copy the entire contents of <code>supabase-schema.sql</code></li>
+                    <li>Paste into the editor</li>
+                    <li>Click "Run" (bottom right)</li>
+                </ul>
+                <div class="info">
+                    <strong>✓ Success!</strong> You should see "Success. No rows returned" - this is normal.
+                </div>
+            </div>
+
+            <div class="step">
+                <h3><span class="step-number">4</span>Enable Email Authentication</h3>
+                <ul>
+                    <li>Go to <strong>Authentication</strong> → <strong>Providers</strong></li>
+                    <li>Ensure "Email" is enabled (it should be by default)</li>
+                    <li>Optional: Disable "Confirm email" for testing (enable in production)</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h3><span class="step-number">5</span>Get API Keys</h3>
+                <ul>
+                    <li>Go to <strong>Settings</strong> → <strong>API</strong></li>
+                    <li>Copy <strong>Project URL</strong></li>
+                    <li>Copy <strong>anon public</strong> key</li>
+                    <li>Save these for later!</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h3><span class="step-number">6</span>Enable Realtime (Optional but Recommended)</h3>
+                <ul>
+                    <li>Go to <strong>Database</strong> → <strong>Replication</strong></li>
+                    <li>Enable replication for the <code>orders</code> table</li>
+                    <li>This enables real-time updates across all dashboards</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>2️⃣ OneSignal Setup</h2>
+
+            <div class="step">
+                <h3><span class="step-number">1</span>Create Account</h3>
+                <p>Go to <a href="https://onesignal.com" target="_blank">onesignal.com</a> and sign up for free.</p>
+            </div>
+
+            <div class="step">
+                <h3><span class="step-number">2</span>Create New App</h3>
+                <ul>
+                    <li>Click "New App/Website"</li>
+                    <li>Enter app name: "LaundryLink"</li>
+                    <li>Select "Web Push" platform</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h3><span class="step-number">3</span>Configure Web Push</h3>
+                <ul>
+                    <li>Choose "Typical Site" configuration</li>
+                    <li>Enter your site URL (or use <code>localhost:8000</code> for testing)</li>
+                    <li>Upload an icon (optional) or use default</li>
+                    <li>Complete the setup wizard</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h3><span class="step-number">4</span>Get App ID</h3>
+                <ul>
+                    <li>After setup, go to <strong>Settings</strong> → <strong>Keys & IDs</strong></li>
+                    <li>Copy your <strong>App ID</strong></li>
+                    <li>Save it for later!</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>3️⃣ Cloudflare Turnstile Setup</h2>
+
+            <div class="step">
+                <h3><span class="step-number">1</span>Access Turnstile</h3>
+                <p>Go to <a href="https://dash.cloudflare.com" target="_blank">Cloudflare Dashboard</a> (create account if needed)</p>
+            </div>
+
+            <div class="step">
+                <h3><span class="step-number">2</span>Create Site</h3>
+                <ul>
+                    <li>Navigate to <strong>Turnstile</strong> in the sidebar</li>
+                    <li>Click "Add Site"</li>
+                    <li>Enter site name: "LaundryLink"</li>
+                    <li>Add domain (or use <code>localhost</code> for testing)</li>
+                    <li>Choose widget mode: <strong>Managed</strong> (recommended)</li>
+                    <li>Click "Create"</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h3><span class="step-number">3</span>Get Site Key</h3>
+                <ul>
+                    <li>Copy the <strong>Site Key</strong></li>
+                    <li>Save it for configuration!</li>
+                </ul>
+                <div class="warning">
+                    <strong>Note:</strong> For testing, you can use the test site key: <code>1x00000000000000000000AA</code> (always passes)
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>4️⃣ Configure API Keys</h2>
+
+            <div class="step">
+                <h3><span class="step-number">1</span>Open Config File</h3>
+                <p>Open <code>js/config.js</code> in your text editor</p>
+            </div>
+
+            <div class="step">
+                <h3><span class="step-number">2</span>Replace Placeholder Values</h3>
+                <pre><code>const CONFIG = {
+    supabase: {
+        url: 'YOUR_SUPABASE_URL',        // Paste your Supabase URL here
+        anonKey: 'YOUR_SUPABASE_ANON_KEY' // Paste your anon key here
+    },
+    oneSignal: {
+        appId: 'YOUR_ONESIGNAL_APP_ID'    // Paste your OneSignal App ID here
+    },
+    turnstile: {
+        siteKey: 'YOUR_TURNSTILE_SITE_KEY' // Paste your Turnstile site key here
+    }
+};</code></pre>
+            </div>
+
+            <div class="step">
+                <h3><span class="step-number">3</span>Save the File</h3>
+                <p>Save and close the file.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>5️⃣ Create Admin User</h2>
+
+            <div class="step">
+                <h3><span class="step-number">1</span>Start the App</h3>
+                <p>Run a local server (see deployment section below)</p>
+            </div>
+
+            <div class="step">
+                <h3><span class="step-number">2</span>Register First User</h3>
+                <ul>
+                    <li>Click "Create Account"</li>
+                    <li>Fill in your details</li>
+                    <li>Register as customer</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h3><span class="step-number">3</span>Promote to Admin</h3>
+                <ul>
+                    <li>Go to Supabase Dashboard → <strong>Authentication</strong> → <strong>Users</strong></li>
+                    <li>Copy your user ID (UUID)</li>
+                    <li>Go to <strong>SQL Editor</strong></li>
+                    <li>Run this query:</li>
+                </ul>
+                <pre><code>update profiles
+set role = 'admin'
+where id = 'YOUR-USER-UUID-HERE';</code></pre>
+            </div>
+
+            <div class="step">
+                <h3><span class="step-number">4</span>Log Out and Log In</h3>
+                <p>You should now see the Admin Dashboard!</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>6️⃣ Deployment Options</h2>
+
+            <h3>Option 1: Local Testing</h3>
+            <div class="step">
+                <p>Using Python:</p>
+                <pre><code>python -m http.server 8000</code></pre>
+                <p>Then visit: <code>http://localhost:8000</code></p>
+            </div>
+
+            <div class="step">
+                <p>Using Node.js:</p>
+                <pre><code>npx serve .</code></pre>
+            </div>
+
+            <h3>Option 2: Deploy to Netlify (Recommended)</h3>
+            <div class="step">
+                <ol>
+                    <li>Push your code to GitHub</li>
+                    <li>Go to <a href="https://netlify.com" target="_blank">netlify.com</a></li>
+                    <li>Click "Add new site" → "Import an existing project"</li>
+                    <li>Connect your GitHub repository</li>
+                    <li>No build settings needed - just deploy!</li>
+                    <li>Your app will be live at <code>your-site.netlify.app</code></li>
+                </ol>
+            </div>
+
+            <h3>Option 3: Deploy to Vercel</h3>
+            <div class="step">
+                <ol>
+                    <li>Push your code to GitHub</li>
+                    <li>Go to <a href="https://vercel.com" target="_blank">vercel.com</a></li>
+                    <li>Click "New Project"</li>
+                    <li>Import your GitHub repository</li>
+                    <li>Deploy!</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>7️⃣ Testing the App</h2>
+
+            <div class="info">
+                <h3>Test the Complete Flow:</h3>
+                <ol>
+                    <li><strong>Customer:</strong> Register → Book a service → Check order status</li>
+                    <li><strong>Admin:</strong> View new order → Add staff member → Assign order to staff</li>
+                    <li><strong>Staff:</strong> Log in with staff credentials → View assigned task → Mark complete</li>
+                    <li><strong>Customer:</strong> Receive notification → Check completed order</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>📱 Installing as PWA</h2>
+
+            <h3>On Mobile (Android)</h3>
+            <ul>
+                <li>Open in Chrome</li>
+                <li>Tap menu (⋮) → "Install app"</li>
+            </ul>
+
+            <h3>On Mobile (iOS)</h3>
+            <ul>
+                <li>Open in Safari</li>
+                <li>Tap share (⎆) → "Add to Home Screen"</li>
+            </ul>
+
+            <h3>On Desktop</h3>
+            <ul>
+                <li>Click install icon in address bar</li>
+                <li>Or use Chrome menu → "Install LaundryLink"</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>🎨 Customization Tips</h2>
+
+            <h3>Change Colors</h3>
+            <p>Edit <code>css/styles.css</code> - look for CSS variables in <code>:root</code></p>
+
+            <h3>Update Pricing</h3>
+            <p>Edit <code>js/config.js</code> - modify <code>SERVICE_PRICING</code></p>
+
+            <h3>Add/Remove Services</h3>
+            <p>Update both <code>js/config.js</code> and the select dropdown in <code>index.html</code></p>
+
+            <h3>Change Branding</h3>
+            <ul>
+                <li>Update app name in <code>index.html</code> and <code>manifest.json</code></li>
+                <li>Replace icons in <code>img/</code> folder (create 192x192 and 512x512 PNG files)</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>🐛 Troubleshooting</h2>
+
+            <h3>Can't log in?</h3>
+            <ul>
+                <li>Check Supabase credentials in <code>config.js</code></li>
+                <li>Verify email confirmation is disabled in Supabase Auth settings</li>
+                <li>Check browser console for errors (F12)</li>
+            </ul>
+
+            <h3>Push notifications not working?</h3>
+            <ul>
+                <li>Must use HTTPS (or localhost for testing)</li>
+                <li>Check OneSignal App ID is correct</li>
+                <li>Grant browser permission when prompted</li>
+            </ul>
+
+            <h3>Turnstile not showing?</h3>
+            <ul>
+                <li>Verify site key is correct</li>
+                <li>Try using test key for local testing</li>
+                <li>Disable adblockers</li>
+            </ul>
+
+            <h3>Database errors?</h3>
+            <ul>
+                <li>Ensure schema was run completely</li>
+                <li>Check Row Level Security policies are enabled</li>
+                <li>Verify user role in profiles table</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>🎯 Next Steps</h2>
+            <ul>
+                <li>Set up Supabase Edge Functions for production (see README.md)</li>
+                <li>Configure email templates in Supabase</li>
+                <li>Add custom domain</li>
+                <li>Enable analytics</li>
+                <li>Set up automated backups</li>
+            </ul>
+        </div>
+
+        <div class="card" style="text-align: center; background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%); color: white;">
+            <h2 style="color: white;">🎉 You're All Set!</h2>
+            <p>Your LaundryLink PWA is ready to revolutionize your laundry business.</p>
+            <a href="index.html" class="btn" style="background: white; color: #4F46E5; margin-top: 20px;">Launch LaundryLink →</a>
+        </div>
+    </div>
+</body>
+</html>
