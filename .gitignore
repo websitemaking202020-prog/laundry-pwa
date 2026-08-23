@@ -7,9 +7,13 @@
 node_modules/
 package-lock.json
 
-# Environment files
+# Environment files - NEVER COMMIT THESE!
 .env
 .env.local
+.env.*.local
+
+# Keep template
+!.env.example
 
 # Editor directories
 .vscode/

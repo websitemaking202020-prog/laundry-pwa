@@ -1,20 +1,21 @@
-// ⚙️ Configuration - Replace with your actual API keys
+// ⚙️ Configuration - Environment variables loaded from Vercel
+// You don't need to edit this file!
 
 const CONFIG = {
     // Supabase Configuration
     supabase: {
-        url: 'YOUR_SUPABASE_URL', // e.g., https://xxxxx.supabase.co
-        anonKey: 'YOUR_SUPABASE_ANON_KEY'
+        url: '{{SUPABASE_URL}}',
+        anonKey: '{{SUPABASE_ANON_KEY}}'
     },
 
     // OneSignal Configuration
     oneSignal: {
-        appId: 'YOUR_ONESIGNAL_APP_ID'
+        appId: '{{ONESIGNAL_APP_ID}}'
     },
 
     // Cloudflare Turnstile Configuration
     turnstile: {
-        siteKey: 'YOUR_TURNSTILE_SITE_KEY'
+        siteKey: '{{TURNSTILE_SITE_KEY}}'
     }
 };
 
