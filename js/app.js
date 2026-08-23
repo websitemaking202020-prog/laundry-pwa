@@ -88,6 +88,8 @@ async function login(email, password) {
 
 async function register(name, email, phone, password) {
     try {
+        console.log('Starting registration...', { name, email, phone });
+
         // Sign up user
         const { data, error } = await supabase.auth.signUp({
             email,
@@ -97,11 +99,25 @@ async function register(name, email, phone, password) {
                     name,
                     phone,
                     role: 'customer'
-                }
+                },
+                emailRedirectTo: window.location.origin
             }
         });
 
+        console.log('Signup response:', { data, error });
+
         if (error) throw error;
+
+        if (!data.user) {
+            throw new Error('User creation failed - no user returned');
+        }
+
+        // Check if email confirmation is required
+        if (data.user && !data.session) {
+            showToast('Check your email to confirm your account!', 'success');
+            showScreen('loginScreen');
+            return;
+        }
 
         // Create profile
         const { error: profileError } = await supabase
@@ -114,12 +130,18 @@ async function register(name, email, phone, password) {
                 role: 'customer'
             }]);
 
-        if (profileError) throw profileError;
+        console.log('Profile creation:', { profileError });
+
+        if (profileError) {
+            console.error('Profile error details:', profileError);
+            throw profileError;
+        }
 
         showToast('Account created! Please log in.', 'success');
         showScreen('loginScreen');
     } catch (error) {
-        showToast(error.message, 'error');
+        console.error('Registration error:', error);
+        showToast(error.message || 'Registration failed. Please try again.', 'error');
     }
 }
 
